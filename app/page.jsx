@@ -9,11 +9,16 @@ export default function Home() {
             flexDirection="column"
             rowGap="1rem"
             p={2}
-            sx={{
-                width: "100%",
-                height: "100%",
-            }}>
-            <NavigationMenu />
+            width="100%"
+            height="100%">
+            <NavigationMenu
+                items={[
+                    {
+                        label: "Search jobs",
+                        value: "searchJobs",
+                    },
+                ]}
+            />
         </Box>
     );
 }
