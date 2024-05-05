@@ -1,10 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Box from "@mui/material/Box";
 import NavigationMenu from "@/components/NavigationMenu";
 import DropdownButton from "@/components/DropdownButton";
+import JobContainer from "@/components/JobContainer";
+
+const headers = new Headers().append("Content-Type", "application/json");
+
+const body = JSON.stringify({
+    limit: 10,
+    offset: 0,
+});
+
+const options = {
+    method: "POST",
+    headers,
+    body,
+};
 
 export default function Home() {
     const [remote, setRemote] = useState([]);
@@ -13,6 +27,17 @@ export default function Home() {
     const [location, setLocation] = useState([]);
     const [role, setRole] = useState([]);
     const [techStack, setTechStack] = useState([]);
+    const [jobItems, setJobItems] = useState([]);
+
+    useEffect(() => {
+        fetch("https://api.weekday.technology/adhoc/getSampleJdJSON", options)
+            .then((res) => res.json())
+            .then((result) => {
+                setJobItems(result);
+                console.log(result);
+            })
+            .catch((error) => console.log(error));
+    }, []);
 
     return (
         <Box
@@ -92,6 +117,8 @@ export default function Home() {
                     multiple={true}
                 />
             </Box>
+
+            <JobContainer />
         </Box>
     );
 }
