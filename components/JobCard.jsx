@@ -11,7 +11,7 @@ import CardHeader from "@mui/material/CardHeader";
 import Collapse from "@mui/material/Collapse";
 import Typography from "@mui/material/Typography";
 
-export default function JobCard() {
+export default function JobCard({ item }) {
     const [expanded, setExpanded] = useState(false);
     const [viewButton, setViewButton] = useState(true);
     const ref = useRef();
@@ -34,6 +34,7 @@ export default function JobCard() {
                 boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.25)",
                 minWidth: "fit-content",
                 height: "fit-content",
+                minHeight: "100%",
             }}>
             <Typography
                 fontWeight={400}
@@ -53,7 +54,7 @@ export default function JobCard() {
                 avatar={
                     <Image
                         alt="logo"
-                        src={"https://logo.clearbit.com/dropbox.com"}
+                        src={item.logoUrl}
                         width={50}
                         height={50}
                         priority
@@ -65,22 +66,23 @@ export default function JobCard() {
                         fontWeight={600}
                         color="#8b8b8b"
                         letterSpacing="1px">
-                        Homework App
+                        {item.companyName}
                     </Typography>
                 }
                 subheader={
                     <Typography
                         fontSize="0.9rem"
                         fontWeight={400}
+                        textTransform="capitalize"
                         color="rgba(0, 0, 0, 0.8)">
-                        Jr Fullstack
+                        {item.jobRole}
                         <br />
                         <span
                             style={{
                                 fontSize: "12px",
                                 fontWeight: 500,
                             }}>
-                            India
+                            {item.location}
                         </span>
                     </Typography>
                 }
@@ -98,27 +100,14 @@ export default function JobCard() {
                         fontWeight={400}
                         mb={2}
                         color="rgb(77, 89, 106)">
-                        Estimated Salary: 35K - 45K USD
+                        {`Estimated Salary: ${item.minJdSalary}K - ${item.maxJdSalary}K ${item.salaryCurrencyCode}`}
                         <span> ✅</span>
                     </Typography>
                     <Typography variant="body1" fontWeight={500}>
                         About Company:
                     </Typography>
                     <Typography variant="body2">
-                        Job Description Job Description Job Description Job
-                        Description Job Description Job Description Job
-                        Description Job Description Job Description Job
-                        Description Job Description Job Description Job
-                        Description Job Description Job Description Job
-                        Description Job Description Job Description Job
-                        Description job Description Description Job Description
-                        Job Description Job Description Job Description Job
-                        Description Job Description job Description Description
-                        Job Description Job Description Job Description Job
-                        Description Job Description Job Description job
-                        Description Description Job Description Job Description
-                        Job Description Job Description Job Description Job
-                        Description job Description
+                        {item.jobDetailsFromCompany}
                     </Typography>
                 </CardContent>
             </Collapse>
@@ -168,19 +157,25 @@ export default function JobCard() {
                     ) : (
                         ""
                     )}
-                    <Typography
-                        fontSize="0.85rem"
-                        fontWeight={600}
-                        color="#8b8b8b"
-                        letterSpacing="1px">
-                        Minimum Experience
-                    </Typography>
-                    <Typography
-                        fontSize="0.9rem"
-                        fontWeight={400}
-                        color="rgba(0, 0, 0, 0.8)">
-                        1 year
-                    </Typography>
+                    {item.minExp ? (
+                        <>
+                            <Typography
+                                fontSize="0.85rem"
+                                fontWeight={600}
+                                color="#8b8b8b"
+                                letterSpacing="1px">
+                                Minimum Experience
+                            </Typography>
+                            <Typography
+                                fontSize="0.9rem"
+                                fontWeight={400}
+                                color="rgba(0, 0, 0, 0.8)">
+                                {`${item.minExp} year`}
+                            </Typography>
+                        </>
+                    ) : (
+                        ""
+                    )}
                     <Button
                         variant="contained"
                         fullWidth

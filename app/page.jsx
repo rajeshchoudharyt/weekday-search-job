@@ -118,7 +118,7 @@ export default function Home() {
                 />
             </Box>
 
-            <JobContainer />
+            <JobContainer items={jobItems.jdList} />
         </Box>
     );
 }

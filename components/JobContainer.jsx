@@ -1,27 +1,21 @@
 import JobCard from "./JobCard";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 
-export default function JobContainer() {
+const jobCardProps = {
+    xs: 12,
+    sm: 6,
+    md: 4,
+    lg: 3,
+};
+
+export default function JobContainer({ items }) {
     return (
-        <Grid container spacing={2} width={1}>
-            <Grid xs={12} sm={6} md={4} lg={3}>
-                <JobCard />
-            </Grid>
-            <Grid xs={12} sm={6} md={4} lg={3}>
-                <JobCard />
-            </Grid>
-            <Grid xs={12} sm={6} md={4} lg={3}>
-                <JobCard />
-            </Grid>
-            <Grid xs={12} sm={6} md={4} lg={3}>
-                <JobCard />
-            </Grid>
-            <Grid xs={12} sm={6} md={4} lg={3}>
-                <JobCard />
-            </Grid>
-            <Grid xs={12} sm={6} md={4} lg={3}>
-                <JobCard />
-            </Grid>
+        <Grid container spacing={4} width={1}>
+            {items?.map((item) => (
+                <Grid {...jobCardProps} key={item.jdUid}>
+                    <JobCard item={item} />
+                </Grid>
+            ))}
         </Grid>
     );
 }
