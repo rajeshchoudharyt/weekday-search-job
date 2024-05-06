@@ -1,23 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import Box from "@mui/material/Box";
 import NavigationMenu from "@/components/NavigationMenu";
 import DropdownButton from "@/components/DropdownButton";
 import JobContainer from "@/components/JobContainer";
-
-const headers = new Headers().append("Content-Type", "application/json");
-
-const body = JSON.stringify({
-    limit: 10,
-    offset: 0,
-});
+import CircularProgress from "@mui/material/CircularProgress";
 
 const options = {
     method: "POST",
-    headers,
-    body,
+    headers: {
+        "Content-Type": "application/json",
+    },
 };
 
 export default function Home() {
@@ -29,15 +24,83 @@ export default function Home() {
     const [techStack, setTechStack] = useState([]);
     const [jobItems, setJobItems] = useState([]);
 
+    const [isLoading, setIsLoading] = useState(true);
+    const [offset, setOffset] = useState(10);
+    const ref = useRef();
+
     useEffect(() => {
-        fetch("https://api.weekday.technology/adhoc/getSampleJdJSON", options)
-            .then((res) => res.json())
-            .then((result) => {
-                setJobItems(result);
+        const getData = async () => {
+            const body = {
+                body: JSON.stringify({
+                    limit: 10,
+                    offset: 0,
+                }),
+            };
+
+            try {
+                const response = await fetch(
+                    "https://api.weekday.technology/adhoc/getSampleJdJSON",
+                    { ...options, ...body }
+                );
+                const result = await response.json();
+
+                setJobItems(result.jdList);
                 console.log(result);
-            })
-            .catch((error) => console.log(error));
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        setIsLoading(true);
+        getData();
+        setIsLoading(false);
     }, []);
+
+    // To detect end of page for infinite scrolling
+    const fetchData = useCallback(async () => {
+        if (isLoading) return;
+
+        setIsLoading(true);
+
+        const body = {
+            body: JSON.stringify({
+                limit: 10,
+                offset: offset,
+            }),
+        };
+
+        try {
+            const response = await fetch(
+                "https://api.weekday.technology/adhoc/getSampleJdJSON",
+                { ...options, ...body }
+            );
+            const result = await response.json();
+
+            setJobItems((prev) => [...prev, ...result.jdList]);
+
+            console.log(result);
+        } catch (error) {
+            console.log(error);
+        }
+
+        setOffset((prev) => prev + 10);
+        setIsLoading(false);
+    }, [isLoading, offset]);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            const target = entries[0];
+            if (target.isIntersecting) fetchData();
+        });
+
+        if (ref.current) observer.observe(ref.current);
+
+        return () => {
+            if (ref.current) observer.unobserve(ref.current);
+        };
+    }, [fetchData]);
+
+    //
 
     return (
         <Box
@@ -118,7 +181,9 @@ export default function Home() {
                 />
             </Box>
 
-            <JobContainer items={jobItems.jdList} />
+            <JobContainer items={jobItems} />
+
+            <CircularProgress size="1.5rem" ref={ref} />
         </Box>
     );
 }

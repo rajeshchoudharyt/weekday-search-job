@@ -10,6 +10,21 @@ import CardActions from "@mui/material/CardActions";
 import CardHeader from "@mui/material/CardHeader";
 import Collapse from "@mui/material/Collapse";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
+
+const getSalary = (min, max, currency) => {
+    let str = "Estimated Salary: ";
+
+    str += min
+        ? max
+            ? `${min}K - ${max}K ${currency}`
+            : `min ${min}K currency`
+        : max
+        ? `upto ${max}K ${currency}`
+        : `Not mentioned`;
+
+    return str;
+};
 
 export default function JobCard({ item }) {
     const [expanded, setExpanded] = useState(false);
@@ -22,7 +37,9 @@ export default function JobCard({ item }) {
     }, []);
 
     const handleClick = () => {
-        setExpanded(!expanded);
+        const value = !expanded;
+
+        setExpanded(value);
     };
 
     return (
@@ -100,7 +117,11 @@ export default function JobCard({ item }) {
                         fontWeight={400}
                         mb={2}
                         color="rgb(77, 89, 106)">
-                        {`Estimated Salary: ${item.minJdSalary}K - ${item.maxJdSalary}K ${item.salaryCurrencyCode}`}
+                        {getSalary(
+                            item.minJdSalary,
+                            item.maxJdSalary,
+                            item.salaryCurrencyCode
+                        )}
                         <span> ✅</span>
                     </Typography>
                     <Typography variant="body1" fontWeight={500}>
@@ -157,25 +178,19 @@ export default function JobCard({ item }) {
                     ) : (
                         ""
                     )}
-                    {item.minExp ? (
-                        <>
-                            <Typography
-                                fontSize="0.85rem"
-                                fontWeight={600}
-                                color="#8b8b8b"
-                                letterSpacing="1px">
-                                Minimum Experience
-                            </Typography>
-                            <Typography
-                                fontSize="0.9rem"
-                                fontWeight={400}
-                                color="rgba(0, 0, 0, 0.8)">
-                                {`${item.minExp} year`}
-                            </Typography>
-                        </>
-                    ) : (
-                        ""
-                    )}
+                    <Typography
+                        fontSize="0.85rem"
+                        fontWeight={600}
+                        color="#8b8b8b"
+                        letterSpacing="1px">
+                        Minimum Experience
+                    </Typography>
+                    <Typography
+                        fontSize="0.9rem"
+                        fontWeight={400}
+                        color="rgba(0, 0, 0, 0.8)">
+                        {item.minExp ? `${item.minExp} years` : "Not required"}
+                    </Typography>
                     <Button
                         variant="contained"
                         fullWidth
@@ -184,8 +199,18 @@ export default function JobCard({ item }) {
                             mt: 2,
                             backgroundColor: "rgb(85, 239, 196)",
                             color: "black",
+                            p: 0,
                         }}>
-                        ⚡ Easy Apply
+                        <Link
+                            href={item.jdLink}
+                            target="_blank"
+                            style={{
+                                textDecoration: "none",
+                                padding: "0.5rem",
+                                width: "100%",
+                            }}>
+                            ⚡ Easy Apply
+                        </Link>
                     </Button>
                 </Box>
             </CardActions>
