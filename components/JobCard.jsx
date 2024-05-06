@@ -32,7 +32,8 @@ export default function JobCard() {
                 p: 2.5,
                 borderRadius: "1.25rem",
                 boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.25)",
-                minHeight: "85vh",
+                minWidth: "fit-content",
+                height: "fit-content",
             }}>
             <Typography
                 fontWeight={400}

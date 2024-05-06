@@ -1,18 +1,27 @@
-import Box from "@mui/material/Box";
 import JobCard from "./JobCard";
+import Grid from "@mui/material/Unstable_Grid2/Grid2";
 
 export default function JobContainer() {
     return (
-        <Box
-            display="grid"
-            gridTemplateColumns="repeat(12, 1fr)"
-            gap={2}
-            width={1}>
-            <Box gridColumn="span 4">
+        <Grid container spacing={2} width={1}>
+            <Grid xs={12} sm={6} md={4} lg={3}>
                 <JobCard />
-            </Box>
-            <Box gridColumn="span 4">Hello</Box>
-            <Box gridColumn="span 4">Hello</Box>
-        </Box>
+            </Grid>
+            <Grid xs={12} sm={6} md={4} lg={3}>
+                <JobCard />
+            </Grid>
+            <Grid xs={12} sm={6} md={4} lg={3}>
+                <JobCard />
+            </Grid>
+            <Grid xs={12} sm={6} md={4} lg={3}>
+                <JobCard />
+            </Grid>
+            <Grid xs={12} sm={6} md={4} lg={3}>
+                <JobCard />
+            </Grid>
+            <Grid xs={12} sm={6} md={4} lg={3}>
+                <JobCard />
+            </Grid>
+        </Grid>
     );
 }
