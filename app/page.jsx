@@ -21,7 +21,6 @@ export default function Home() {
     const [minBasePay, setMinBasePay] = useState(null);
     const [location, setLocation] = useState([]);
     const [role, setRole] = useState([]);
-    const [techStack, setTechStack] = useState([]);
     const [jobItems, setJobItems] = useState([]);
 
     const [isLoading, setIsLoading] = useState(true);
@@ -90,7 +89,7 @@ export default function Home() {
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
             const target = entries[0];
-            if (target.isIntersecting) fetchData();
+            if (jobItems.length > 0 && target.isIntersecting) fetchData();
         });
 
         if (ref.current) observer.observe(ref.current);
@@ -98,7 +97,7 @@ export default function Home() {
         return () => {
             if (ref.current) observer.unobserve(ref.current);
         };
-    }, [fetchData]);
+    }, [fetchData, jobItems]);
 
     //
 
@@ -171,19 +170,11 @@ export default function Home() {
                     multiple={true}
                     groupedOptions={true}
                 />
-
-                <DropdownButton
-                    label="Tech Stack"
-                    options={["Python", "JavaScript", "Java"]}
-                    value={techStack}
-                    setValue={setTechStack}
-                    multiple={true}
-                />
             </Box>
 
             <JobContainer items={jobItems} />
 
-            <CircularProgress size="1.5rem" ref={ref} />
+            <CircularProgress size="1.5rem" ref={ref} sx={{ mt: 2 }} />
         </Box>
     );
 }
