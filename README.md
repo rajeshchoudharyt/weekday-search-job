@@ -2,11 +2,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Weekday Job Listing Assignment - Search Job Section
 
-### Prerequisites
-
-Dependencies Required and Installed:
+### Prerequisites : Requirements
 
 • npm - Node Package Manager
+
 • GitHub CLI - git
 
 ## Getting Started
