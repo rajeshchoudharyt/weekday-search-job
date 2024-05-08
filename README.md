@@ -1,8 +1,19 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Weekday Job Listing Assignment - Search Job Section
+
+### Prerequisites
+
+Dependencies Required and Installed:
+• npm - Node Package Manager
+• GitHub CLI - git
+
 ## Getting Started
 
 First, clone this repository to your local machine.
+```bash
+git clonehttps://github.com/rajeshchoudharyt/weekday-search-job
+```
 
 Second, install dependencies:
 
