@@ -12,7 +12,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 First, clone this repository to your local machine.
 ```bash
-git clonehttps://github.com/rajeshchoudharyt/weekday-search-job
+git clone https://github.com/rajeshchoudharyt/weekday-search-job
 ```
 
 Second, install dependencies:
