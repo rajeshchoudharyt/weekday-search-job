@@ -5,6 +5,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ### Prerequisites
 
 Dependencies Required and Installed:
+
 • npm - Node Package Manager
 • GitHub CLI - git
 
