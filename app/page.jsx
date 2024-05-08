@@ -34,7 +34,10 @@ export default function Home() {
 
     const [isLoading, setIsLoading] = useState(true);
     const [offset, setOffset] = useState(10);
+    const [progress, setProgress] = useState(true);
+
     const ref = useRef();
+    const currentRequests = useRef(0);
 
     //
     // Data initialization
@@ -66,12 +69,23 @@ export default function Home() {
     useEffect(() => {
         const items = applyFilters([...data], filters);
         setFilteredData(items);
-    }, [filters, data]);
+
+        // To handle edge cases
+        if (filteredData.length > 0) {
+            currentRequests.current = 0;
+            setProgress(true);
+        } else setProgress(false);
+    }, [filters, data, currentRequests]);
 
     //
     // To update data on page scroll
     const fetchData = useCallback(async () => {
         if (isLoading) return;
+
+        if (currentRequests.current >= 1) {
+            currentRequests.current = 0;
+            return;
+        }
 
         setIsLoading(true);
         const body = JSON.stringify({ limit: 10, offset: offset });
@@ -88,7 +102,9 @@ export default function Home() {
 
         setOffset((prev) => prev + 10);
         setIsLoading(false);
-    }, [isLoading, offset]);
+        currentRequests.current += 1;
+        console.log(currentRequests.current);
+    }, [isLoading, offset, currentRequests]);
 
     //
     // Observe on page scroll - Observer
@@ -230,7 +246,29 @@ export default function Home() {
             </Box>
 
             <JobContainer items={filteredData} />
-            <CircularProgress size="1.5rem" ref={ref} sx={{ mt: 2 }} />
+
+            {!progress ? (
+                <Box
+                    sx={{
+                        width: "100%",
+                        height: "100vh",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}>
+                    No jobs found
+                </Box>
+            ) : (
+                ""
+            )}
+            <CircularProgress
+                size="1.5rem"
+                ref={ref}
+                style={{ marginTop: "1rem" }}
+                {...(!progress
+                    ? { sx: { display: "none" } }
+                    : { sx: { display: "block" } })}
+            />
         </Box>
     );
 }
