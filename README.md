@@ -1,46 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Weekday Job Listing Assignment - Search Job Section
+## Weekday Job Listing Assignment - Search Job Section (React, Next.js, Material UI)
 
 ### Prerequisites : Requirements
 
-• npm - Node Package Manager
-
-• GitHub CLI - git
+* npm - Node Package Manager
+* GitHub CLI - git
 
 ## Getting Started
 
-First, clone this repository to your local machine.
+* First, clone this repository to your local machine.
+
 ```bash
 git clone https://github.com/rajeshchoudharyt/weekday-search-job
 ```
 
-Second, install dependencies:
+* Second, install dependencies:
 
 ```bash
 npm i
 ```
 
-Third, run the development server:
+* Third, run the development server:
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* Finally, visit [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 
-## Learn More
+## Additional information for evaluation
 
-To learn more about Next.js, take a look at the following resources:
+As per the assignment guidelines,
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* Out of total 6 filter option, _"location"_ and _"remote"_ are dependent to each other, so merged to one option.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+* _"Tech stack"_ filter option ignored (Guideline: Ignore if API doesn't have the required data).
 
-## Deploy on Vercel
+* App is responsive to all different screen sizes including "Mobile".
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* Redux is replaced with built-in React hooks logic. Since the app data is dependent only to one single component and the data flow throughout the app is not complex. (Guideline: Creating own logic is better implementation then using 3rd party libraries).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+* Infinite scrolling implemented.
+
+
+**Basic optimization and performance techniques**
+
+While running the app locally in 'development', Next.js renders the App component twice. To render only once set below flag to next.config.js file.
+
+```bash
+const nextConfig = {
+    reactStrictMode: false
+}
+ ```
+
+In production, component is rendered only once.
