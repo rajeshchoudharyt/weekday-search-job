@@ -63,18 +63,23 @@ const groupProps = {
         )),
 };
 
+const labels = {
+    "Min Experience": "minExperience",
+    "Min Base Pay": "minBasePay",
+    "Location / Remote": "locations",
+    Role: "roles",
+};
+
 export default function DropdownButton({
     label,
     options,
     value,
-    setValue,
+    onChange,
     multiple = false,
     groupedOptions = false,
 }) {
     const handleChange = (event, newValue) => {
-        console.log(newValue);
-
-        setValue(newValue);
+        onChange(newValue, labels[label]);
     };
 
     return (
